@@ -28,7 +28,7 @@ spec:
             image: quay.io/tinkerbell-actions/writefile:v1.0.0
             timeout: 90
             environment:
-              DEST_DISK: {{ index .Hardware.Disks 0 }}2
+              DEST_DISK: {{ index .Hardware.Disks 0 }}1
               FS_TYPE: ext4
               DEST_PATH: /etc/systemd/network/20-en.network
               CONTENTS: |
@@ -46,7 +46,7 @@ spec:
             command:
               - "sh"
               - "-c"
-              - "mount /dev/sda2 /mnt; date > /mnt/etc/birth_cert"
+              - "mount /dev/sda1 /mnt; date > /mnt/etc/birth_cert"
 #         - name: "reboot"
 #           image: public.ecr.aws/l0g8r8j6/tinkerbell/hub/reboot-action:latest
 #           timeout: 90
