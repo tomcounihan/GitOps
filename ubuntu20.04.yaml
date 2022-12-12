@@ -9,7 +9,7 @@ spec:
     name: ubuntu2004
     global_timeout: 1800
     tasks:
-      - name: "clear37710-installation"
+      - name: "ubuntu2004-installation"
         worker: "{{.device_1}}"
         volumes:
           - /dev:/dev
