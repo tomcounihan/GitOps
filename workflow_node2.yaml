@@ -4,7 +4,7 @@ metadata:
   name: ubuntunode2
   namespace: tink-system
 spec:
-  templateRef: ubuntu2204
+  templateRef: ubuntu2004
   hardwareRef: node2
   hardwareMap:
     device_1: 40:a6:b7:2d:ed:c4
