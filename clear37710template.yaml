@@ -1,0 +1,55 @@
+apiVersion: "tinkerbell.org/v1alpha1"
+kind: Template
+metadata:
+  name: clear37710
+  namespace: tink-system
+spec:
+  data: |
+    version: "0.1"
+    name: clear37710
+    global_timeout: 1800
+    tasks:
+      - name: "clear37710-installation"
+        worker: "{{.device_1}}"
+        volumes:
+          - /dev:/dev
+          - /dev/console:/dev/console
+          - /lib/firmware:/lib/firmware:ro
+        actions:
+          - name: "stream-clear-image"
+            image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+            timeout: 600
+            environment:
+              DEST_DISK: /dev/sda
+              # Hegel IP
+              IMG_URL: "http://10.10.152.120:8080/springvalleySysDNet.img.xz"
+              COMPRESSED: true
+          - name: "write-networkd-config"
+            image: quay.io/tinkerbell-actions/writefile:v1.0.0
+            timeout: 90
+            environment:
+              DEST_DISK: {{ index .Hardware.Disks 0 }}2
+              FS_TYPE: ext4
+              DEST_PATH: /etc/systemd/network/20-en.network
+              CONTENTS: |
+                [Match]
+                Name=en23*
+                [Network]
+                DHCP=yes
+              UID: 0
+              GID: 0
+              MODE: 0644
+              DIRMODE: 0755
+          - name: "birth-cert"
+            image: alpine
+            timeout: 90
+            command:
+              - "sh"
+              - "-c"
+              - "mount /dev/sda2 /mnt; date > /mnt/etc/birth_cert"
+#         - name: "reboot"
+#           image: public.ecr.aws/l0g8r8j6/tinkerbell/hub/reboot-action:latest
+#           timeout: 90
+#           volumes:
+#           - /worker:/worker
+

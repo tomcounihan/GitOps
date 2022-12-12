@@ -1,0 +1,40 @@
+apiVersion: "tinkerbell.org/v1alpha1"
+kind: Hardware
+metadata:
+  name: node2
+  namespace: tink-system
+spec:
+  disks:
+    - device: /dev/sda
+    - device: /dev/sdb
+  metadata:
+    facility:
+      facility_code: pod15
+    manufacturer:
+      slug: pod15
+    instance:
+      userdata: "sdp"
+      hostname: "node2"
+      id: "40:a6:b7:2d:ed:c4"
+      operating_system:
+        distro: "clear"
+        os_slug: "clear37710"
+        version: "37710"
+  interfaces:
+    - dhcp:
+        arch: x86_64
+        hostname: node2
+        iface_name: enp49s0f0
+        ip:
+          address: 10.10.152.22
+          gateway: 10.10.152.24
+          netmask: 255.255.255.0
+        lease_time: 86400
+        mac: 40:a6:b7:2d:ed:c4
+        name_servers:
+          - 8.8.8.8
+          - 8.8.4.4
+        uefi: true
+      netboot:
+        allowPXE: true
+        allowWorkflow: true
